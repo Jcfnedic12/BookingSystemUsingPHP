@@ -1,0 +1,209 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+*,*::after{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: "poppins", sans-serif;
+}
+
+.navig{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-inline: 5%;
+  padding-block: 3%;
+}
+.navlink{
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  padding: 10px 20px;
+  line-height: 1rem;
+
+}
+
+.formcontainer{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  max-width: 1536px;
+  max-height: 1080px;
+  height: 100vh;
+  width: 100vw;
+  gap: 1%;
+  z-index: 3;
+}
+.formcontainer::after{
+content:'';
+top:0;
+left: 0;
+width: 100%;
+height: 100%;
+position: absolute;
+background-image: url(../resourceFolder/undmd.png);
+background-size: cover;
+background-repeat: no-repeat;
+background-position: bottom;
+
+z-index: 1;
+}
+.formcontainer>*{
+    z-index: 3;
+}
+
+.formPart{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: end;
+  justify-content: center;
+  gap: 3%;
+  flex-shrink: 1;
+  max-width: 300px;
+  max-height: 400px;
+  width: 100%;
+  height: 100%;
+ 
+  background-color: #00000065;
+}
+.errortext{
+  color: red;
+  font-size: .8rem;
+  font-weight: 500;
+  min-height: 20px;
+  overflow: hidden;
+  
+}
+
+.input,.loginbtn{
+  padding: 7px 10px;
+  width: 80%;
+}
+p.errortext.bluemsge{
+  color: blue;
+}
+.btnandlinkcontainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-height: 80px;
+  gap: 8%;
+}
+.input.userField{
+ outline: none;
+ border: 2px solid rgb(181, 181, 198);
+ background-color: #00000065;
+ color: white;
+}
+
+::placeholder{
+  color: rgba(255, 255, 255, 0.788);
+}
+.input.userField:focus{
+  border: 2px solid rgb(0, 0, 255) !important;
+  
+}
+
+.loginbtn{
+  background-color: blue;
+  color: white;
+  border-color: blue;
+  border: 1px solid blue;
+  font-weight: 600;
+  outline: none;
+}
+.loginbtn:hover{
+  background-color: #0000e1;
+}
+.loginbtn:active, .loginbtn:target{
+  background-color: #01019b;
+}
+.btnandlinkcontainer a{
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 300;
+  cursor: pointer;
+}
+.signuplink{
+  border: 1px solid #7300ff;
+  text-align: center;
+  width: 80%;
+  font-weight: 400;
+  color: white;
+}
+
+.signuplink:hover{
+  background-color: #5d00cf;
+  color: white;
+}
+.signuplink:active, .signuplink:target{
+  background-color: #4e00ae;
+  color: white;
+}
+.forgotpasslink{
+  color: white;
+}
+/* heading text part */
+.headingContainer{
+  max-width: 400px;
+  height: 100vh;
+  max-height: 400px;
+  flex-shrink: 3;
+  display: flex;
+  align-items: center;
+  
+}
+.border{
+  height: 100%;
+  width: 20px;
+  border: 3px solid white;
+}
+.headingText{
+  font-size: clamp(2rem, 8vw,70px);
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: white;
+  text-align: left;
+ margin-left: 10px;
+  
+}
+.textspan{
+  font-size: clamp(2rem, 8vw,85px);
+}
+
+@media (max-width:645px){
+  .formcontainer{
+
+    padding-inline: 5%;
+  }
+}
+@media (max-width:541px){
+  .formcontainer{
+    flex-direction: column-reverse;
+    padding-inline: 3%;
+    padding-block: 3%;
+  }
+  .headingContainer{
+    max-height: 150px;
+    max-width: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+  }
+  .border{
+    display: none;
+  }
+  
+}
+
+/* nice try */
