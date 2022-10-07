@@ -1,8 +1,6 @@
 
    <?php
    include_once 'connectionPHP/loginPHP.php';
-   
-
    ?>
   
 
@@ -30,10 +28,7 @@
 
   <?php
     echo "the username is" .$_SESSION['username']. "and the password is". $_SESSION['password'];
-   
-
     ?>
-
     <div class="links">
       <a href="Homepage.php">homepage</a>
     </div>

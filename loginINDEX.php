@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"> 
   <link rel="stylesheet" href="style/login_index.css">
   
-  <title>Document</title>
+  <title>Login</title>
 </head>
 <body>
   <div class="formcontainer" >
@@ -59,7 +59,7 @@
       <h1 class="headingText">Be Refreshed <span class="textspan">With us.</span> </h1>
     </div>
   </div>
-   
+ 
 
 </body>
 </html>

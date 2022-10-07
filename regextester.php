@@ -1,12 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>

@@ -27,22 +27,13 @@
 //   }
 // }
 
-
-
 // selectsql("nedic", "nedic");
-
-
-
   // insert data function
 
     // $insertsql = $sqlconnection->prepare("INSERT into users('user_first', 'user_last','user_email','user_uid','user_pwd') values(");
 
 
   // select data function
-
-
-
-
   // 
   
 // $dbconnect = new mysqli('localhost','root','','logindani');
@@ -66,9 +57,6 @@
 //       echo $resultFetched['user_uid'];
 //     }
 //   }
-
-  
-
 //  }
 
 // ------------------------------------------------------ eto ung gagamitin ko (ung asa lower part)--------------------------
@@ -81,29 +69,49 @@ $last = $_POST['lastname'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $username = $_POST['username'];
-  if (empty($first) || empty($last) || empty($email) || empty($password) || empty($username)){
+$usertype = $_POST['usertype'];
+
+// check empty fields
+  if (empty($first) || empty($last) || empty($email) || empty($password) || empty($username) || empty($usertype)){
     header("Location:../signupINDEX.php?signup=empty");  
   exit();
-  }else if(!preg_match("/^[a-zA-Z]+$/", $first) || !preg_match("/^[a-zA-Z]+$/", $last)){
+  }
+  // check not alphabet char in first and lastname
+  else if(!preg_match("/^[a-zA-Z ]+$/", $first) || !preg_match("/^[a-zA-Z]+$/", $last)){
     header("Location:../signupINDEX.php?signup=charInvalid"); 
     exit();
-  }else if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+  }
+  //check if email is valid
+  else if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
     header("Location:../signupINDEX.php?signup=emailInvalid&first=$first&last=$last&username=$username"); 
     exit();
-  }else{
-    $sqlsignupsearch = $dbconnect->prepare("SELECT * from users WHERE user_first = ? AND user_last = ? AND user_email = ? AND user_uid = ? AND user_pwd = ?;");
-    $sqlsignupsearch->bind_param("sssss",$first, $last, $email, $username,$password);
+  }
+  // initiate check data to database if there's existing user
+  else{
+    $uniqid = uniqid("",true);
+    $sqlsignupsearch = $dbconnect->prepare("SELECT * from usermaindata WHERE userfirstname = ? AND userlastname = ? AND useremail = ? AND userusername = ? and userpassword = ? AND usertype = ? and userdataacross=?;");
+    $sqlsignupsearch->bind_param("sssssss",$first, $last, $email, $username,$password,$usertype,$uniqid);
     $sqlsignupsearch->execute();
     $selectResult = $sqlsignupsearch->get_result()->fetch_assoc();
     
+    // check if theres no existing user in data table
     if ($dbconnect->affected_rows !=0) {
       header("Location:../signupINDEX.php?signup=userExist");
       exit();
       
     }else{
-      $emailcheckifexist = $email;
       $sqlsignupsearch->close();
-      $emaildbchecker = $dbconnect->prepare("SELECT * from users WHERE user_email = ?;");
+     $usernamecheck = $dbconnect->prepare("SELECT * from usermaindata where userusername =?");
+     $usernamecheck->bind_param("s", $username);
+     $usernamecheck->execute();
+     $usernameResultcheck = $usernamecheck->get_result()->fetch_assoc();
+
+     if($dbconnect->affected_rows != 0){
+      header("Location:../signupINDEX.php?signup=usernameTaken&first=$first&last=$last");
+     }else{
+      $emailcheckifexist = $email;
+      $usernamecheck->close();
+      $emaildbchecker = $dbconnect->prepare("SELECT * from usermaindata WHERE useremail = ?;");
       $emaildbchecker->bind_param("s",$emailcheckifexist);
       $emaildbchecker->execute();
       $emailExistResut = $emaildbchecker->get_result()->fetch_assoc();
@@ -112,19 +120,22 @@ $username = $_POST['username'];
         header("Location:../signupINDEX.php?signup=emailExist&first=$first&last=$last&username=$username");
         $first = $_GET['first'];
         $last = $_GET['last'];
-        $username = $_GET['username'];
+        
       exit();
       }else{
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sqlinsertdata = $dbconnect->prepare("INSERT INTO users(user_first,
-      user_last,user_email,user_uid,user_pwd) VALUES(?,?,?,?,?);");
-      $sqlinsertdata->bind_param("sssss",$first, $last, $email, $username,$hashPassword);
+       $status = "false";
+        $sqlinsertdata = $dbconnect->prepare("INSERT INTO usermaindata(userfirstname,
+      userlastname,useremail,userusername,userpassword,usertype,userdataacross) VALUES(?,?,?,?,?,?,?);");
+      $sqlinsertdata->bind_param("sssssss",$first, $last, $email, $username,$hashPassword,$usertype,$uniqid);
       $sqlinsertdata->execute();
+      $profileinsert = $dbconnect->prepare("INSERT INTO userprofiledata(status,dataacross) values(?,?)");
+      $profileinsert->bind_param('ss',$status, $uniqid);
+      $profileinsert->execute();
       header("Location:../signupINDEX.php?signup=success");
       
       }
-      
-
+     }
     }
   }
 }else{

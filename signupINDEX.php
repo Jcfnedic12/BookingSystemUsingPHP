@@ -10,23 +10,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="jsfiles/signupINDEX.js" defer></script>
   <link rel="stylesheet" href="style/signup_index.css">
-  <title>Login</title>
+  <title>Signup</title>
 </head>
 <body>  
   <div class="formcontainer">
-    <h1 class="formheader">Be a part of the bigger <span class="formheaderspan">picture</span> .</h1>
+    <h1 class="formheader">Feel the relaxation with <span class="formheaderspan">us</span></h1>
     <form action="connectionPHP/signupphp.php" method="post" class="formSignup">
     <?php
       if(isset($_GET['first'])){
         echo '<input type="text" placeholder="Enter Firstname" name="firstname" class="formInputs" value="'.$_GET['first'].'">';
       }else{
-        echo '<input type="text" placeholder="Enter Firstname" name="firstname" class="formInputs ">';
+        echo '<input type="text" placeholder="Enter Firstname" name="firstname" class="formInputs">';
       }
 
       if(isset($_GET['last'])){
         echo '<input type="text" placeholder="Enter Lastname" name="lastname" class="formInputs" value="'.$_GET['last'].'">';
       }else{
-        echo '<input type="text" placeholder="Enter Lastname" name="lastname" class="formInputs ">';
+        echo '<input type="text" placeholder="Enter Lastname" name="lastname" class="formInputs">';
       }
   ?>
       <input type="email" placeholder="Enter Email" name="email" class="formInputs ">
@@ -34,10 +34,20 @@
         if(isset($_GET['username'])){
           echo '<input type="text" placeholder="Enter Username" name="username" class="formInputs" value="'.$_GET['username'].'">';
         }else{
-          echo '<input type="text" placeholder="Enter Username" name="username" class="formInputs ">';
+          echo '<input type="text" placeholder="Enter Username" name="username" class="formInputs">';
         }
       ?>
+      
       <input type="password" placeholder="Enter Password" name="password" class="formInputs ">
+      <div class="checkcontainer">
+      <div class="checkboxdiv">
+      <input type="radio" placeholder="Admin" name="usertype" value="admin">Admin
+      </div>
+      <div class="checkboxdiv">
+      <input type="radio" placeholder="user" name="usertype" value="user">User
+      </div>
+      </div>
+      
       <?php
         if (isset($_GET['signup'])) {
           $singup=$_GET['signup'];
@@ -49,6 +59,8 @@
             echo '<p class="formMsge">User has already registered</p>';
           }else if($singup == 'emailExist'){
             echo '<p class="formMsge">Email taken</p>';
+          }else if($singup == 'usernameTaken'){
+            echo '<p class="formMsge">Username taken</p>';
           }else if($singup == 'success'){
             echo '<p class="formMsge bluemsge">Sign-up successful</p>';
           }
